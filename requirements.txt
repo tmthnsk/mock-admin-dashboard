@@ -1,0 +1,20 @@
+# FastAPI - Webフレームワーク
+fastapi==0.104.1
+
+# Uvicorn - ASGIサーバー
+uvicorn[standard]==0.24.0
+
+# SQLAlchemy - ORM
+sqlalchemy==2.0.23
+
+# Pydantic - バリデーション
+pydantic==2.5.0
+
+# Jinja2 - テンプレートエンジン
+jinja2==3.1.2
+
+# python-multipart - フォームデータ処理
+python-multipart==0.0.6
+
+# aiofiles - 静的ファイル配信に必要
+aiofiles==23.2.1

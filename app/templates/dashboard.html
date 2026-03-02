@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}ダッシュボード{% endblock %}
+
+{% block content %}
+
+<!-- Stats Cards -->
+<div class="stats-grid">
+    <div class="stat-card stat-card--blue">
+        <div class="stat-card__icon">&#128100;</div>
+        <div class="stat-card__value">{{ stats.total_users }}</div>
+        <div class="stat-card__label">総ユーザー数</div>
+    </div>
+    <div class="stat-card stat-card--green">
+        <div class="stat-card__icon">&#9989;</div>
+        <div class="stat-card__value">{{ stats.active_users }}</div>
+        <div class="stat-card__label">アクティブユーザー</div>
+    </div>
+    <div class="stat-card stat-card--purple">
+        <div class="stat-card__icon">&#128722;</div>
+        <div class="stat-card__value">{{ stats.total_products }}</div>
+        <div class="stat-card__label">総商品数</div>
+    </div>
+    <div class="stat-card stat-card--orange">
+        <div class="stat-card__icon">&#128230;</div>
+        <div class="stat-card__value">{{ stats.total_stock }}</div>
+        <div class="stat-card__label">総在庫数</div>
+    </div>
+</div>
+
+<!-- Recent Users -->
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">最近のユーザー</h2>
+        <a href="/users" class="btn btn--secondary btn--sm">すべて表示</a>
+    </div>
+    <div id="recent-users-table">
+        <div class="table-container">
+            <div class="loading-cell"><div class="spinner"></div></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>loadRecentUsers();</script>
+{% endblock %}

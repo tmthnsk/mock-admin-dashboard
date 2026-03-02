@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}管理画面{% endblock %} | Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<div class="app-container">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">AD</div>
+            <span class="logo-text">Admin Panel</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <span class="nav-section-label">メインメニュー</span>
+
+            <a href="/dashboard" class="nav-item {% if active_page == 'dashboard' %}active{% endif %}">
+                <span class="nav-icon">&#9632;</span>
+                ダッシュボード
+            </a>
+
+            <span class="nav-section-label">データ管理</span>
+
+            <a href="/users" class="nav-item {% if active_page == 'users' %}active{% endif %}">
+                <span class="nav-icon">&#128100;</span>
+                ユーザー管理
+            </a>
+
+            <a href="/products" class="nav-item {% if active_page == 'products' %}active{% endif %}">
+                <span class="nav-icon">&#128722;</span>
+                商品管理
+            </a>
+
+            <span class="nav-section-label">API</span>
+
+            <a href="/api/docs" class="nav-item" target="_blank">
+                <span class="nav-icon">&#128196;</span>
+                API ドキュメント
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">Mock Admin v1.0.0</div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <div class="main-wrapper">
+        <header class="top-header">
+            <h1 class="page-title">{% block header_title %}{% block title %}{% endblock %}{% endblock %}</h1>
+            <div class="header-right">
+                <span id="current-datetime"></span>
+            </div>
+        </header>
+
+        <main class="content-area">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+</div>
+
+<!-- ===== Shared Delete Modal ===== -->
+<div class="modal-overlay" id="delete-modal" style="display:none;">
+    <div class="modal modal--sm">
+        <div class="modal-header">
+            <h3>削除の確認</h3>
+            <button class="modal-close" onclick="closeModal('delete-modal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p class="confirm-text" id="delete-target-label">このアイテムを削除してもよろしいですか？</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn--secondary" onclick="closeModal('delete-modal')">キャンセル</button>
+            <button class="btn btn--danger" id="delete-confirm-btn" onclick="confirmDelete()">削除</button>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/main.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

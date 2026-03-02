@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}ユーザー管理{% endblock %}
+
+{% block content %}
+
+<div class="page-toolbar">
+    <span class="toolbar-info" id="users-count"></span>
+    <button class="btn btn--primary" onclick="openCreateUserModal()">+ 新規ユーザー作成</button>
+</div>
+
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ユーザー名</th>
+                <th>メールアドレス</th>
+                <th>フルネーム</th>
+                <th>ステータス</th>
+                <th>作成日</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="users-tbody">
+            <tr>
+                <td colspan="7" class="loading-cell"><div class="spinner"></div></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Create / Edit User Modal -->
+<div class="modal-overlay" id="user-modal" style="display:none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="user-modal-title">ユーザー作成</h3>
+            <button class="modal-close" onclick="closeModal('user-modal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="user-form" onsubmit="return false;">
+                <input type="hidden" id="user-id">
+
+                <div class="form-group">
+                    <label for="user-username">ユーザー名 <span style="color:var(--red)">*</span></label>
+                    <input type="text" id="user-username" required minlength="3" maxlength="50"
+                           placeholder="例: tanaka_ichiro">
+                </div>
+
+                <div class="form-group">
+                    <label for="user-email">メールアドレス <span style="color:var(--red)">*</span></label>
+                    <input type="email" id="user-email" required
+                           placeholder="例: tanaka@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="user-full-name">フルネーム</label>
+                    <input type="text" id="user-full-name" maxlength="100"
+                           placeholder="例: 田中 一郎">
+                </div>
+
+                <div class="form-group">
+                    <label for="user-bio">自己紹介</label>
+                    <textarea id="user-bio" rows="3" placeholder="ユーザーの自己紹介文..."></textarea>
+                </div>
+
+                <div class="form-group" id="user-is-active-group" style="display:none;">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                        <input type="checkbox" id="user-is-active" style="width:auto;">
+                        有効（アクティブ）
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn--secondary" onclick="closeModal('user-modal')">キャンセル</button>
+            <button class="btn btn--primary" id="user-save-btn" onclick="submitUserForm()">保存</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>loadUsers();</script>
+{% endblock %}

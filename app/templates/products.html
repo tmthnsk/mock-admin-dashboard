@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}商品管理{% endblock %}
+
+{% block content %}
+
+<div class="page-toolbar">
+    <span class="toolbar-info" id="products-count"></span>
+    <button class="btn btn--primary" onclick="openCreateProductModal()">+ 新規商品作成</button>
+</div>
+
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>商品名</th>
+                <th>カテゴリ</th>
+                <th>価格</th>
+                <th>在庫数</th>
+                <th>ステータス</th>
+                <th>作成日</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="products-tbody">
+            <tr>
+                <td colspan="8" class="loading-cell"><div class="spinner"></div></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Create / Edit Product Modal -->
+<div class="modal-overlay" id="product-modal" style="display:none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="product-modal-title">商品作成</h3>
+            <button class="modal-close" onclick="closeModal('product-modal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="product-form" onsubmit="return false;">
+                <input type="hidden" id="product-id">
+
+                <div class="form-group">
+                    <label for="product-name">商品名 <span style="color:var(--red)">*</span></label>
+                    <input type="text" id="product-name" required maxlength="100"
+                           placeholder="例: プレミアムコーヒー豆">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-price">価格 (円) <span style="color:var(--red)">*</span></label>
+                        <input type="number" id="product-price" required min="1" step="1"
+                               placeholder="例: 1500">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-stock">在庫数</label>
+                        <input type="number" id="product-stock" min="0" step="1" value="0"
+                               placeholder="例: 100">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-category">カテゴリ</label>
+                    <input type="text" id="product-category" maxlength="50"
+                           placeholder="例: 飲料, 食品, 電子機器">
+                </div>
+
+                <div class="form-group">
+                    <label for="product-description">説明</label>
+                    <textarea id="product-description" rows="3"
+                              placeholder="商品の説明..."></textarea>
+                </div>
+
+                <div class="form-group" id="product-is-active-group" style="display:none;">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                        <input type="checkbox" id="product-is-active" style="width:auto;">
+                        販売中（アクティブ）
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn--secondary" onclick="closeModal('product-modal')">キャンセル</button>
+            <button class="btn btn--primary" id="product-save-btn" onclick="submitProductForm()">保存</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>loadProducts();</script>
+{% endblock %}
